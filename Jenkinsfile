@@ -4,10 +4,10 @@ pipeline {
         stage("build image") {
             steps {
                 script {
-                    // def imageName='simongport/react-nodejs-example:1.0'
+                    def imageName='simongport/react-nodejs-example:1.0'
                     echo "building image"
-                    // sh "docker build -t ${imageName}"
-                    // sh "docker push ${imageName}"
+                    sh "docker build -t ${imageName} ."
+                    sh "docker push ${imageName}"
                 }
             }
         }
