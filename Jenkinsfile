@@ -3,23 +3,23 @@ pipeline {
     environment{
         IMAGE_NAME='simongport/react-nodejs-example:1.5'
     }
-    // stages {
-    //     stage("build image") {
-    //         steps {
-    //             script {
-    //                 echo "building image"
-    //                 sh "docker build -t ${env.IMAGE_NAME} ."
-    //             }
-    //         }
-    //     }
-    //      stage("push image to dockerhub") {
-    //         steps {
-    //             script {
-    //                 echo "push image"
-    //                 sh "docker push ${env.IMAGE_NAME}"
-    //             }
-    //         }
-    //     }
+    stages {
+        // stage("build image") {
+        //     steps {
+        //         script {
+        //             echo "building image"
+        //             sh "docker build -t ${env.IMAGE_NAME} ."
+        //         }
+        //     }
+        // }
+        //  stage("push image to dockerhub") {
+        //     steps {
+        //         script {
+        //             echo "push image"
+        //             sh "docker push ${env.IMAGE_NAME}"
+        //         }
+        //     }
+        // }
         stage("deploy") {
             steps {
                 script {
