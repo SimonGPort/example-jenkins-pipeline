@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment{
-        IMAGE_NAME='simongport/react-nodejs-example:1.2'
+        IMAGE_NAME='simongport/react-nodejs-example:1.3'
     }
     stages {
         stage("build image") {
