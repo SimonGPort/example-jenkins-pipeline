@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    environment:{
+    environment {
         CONTAINER_NAME='jenkinspipeline'
     }
     stages {
