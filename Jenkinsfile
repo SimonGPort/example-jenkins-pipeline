@@ -1,16 +1,16 @@
 pipeline {
     agent any
     stages {
-        stage("build image") {
-            steps {
-                script {
-                    def imageName='simongport/react-nodejs-example:1.0'
-                    echo "building image"
-                    sh "docker build -t ${imageName}"
-                    sh "docker push ${imageName}"
-                }
-            }
-        }
+        // stage("build image") {
+        //     steps {
+        //         script {
+        //             def imageName='simongport/react-nodejs-example:1.0'
+        //             echo "building image"
+        //             sh "docker build -t ${imageName}"
+        //             sh "docker push ${imageName}"
+        //         }
+        //     }
+        // }
         stage("deploy") {
             steps {
                 script {
