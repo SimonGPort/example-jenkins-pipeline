@@ -25,7 +25,7 @@ pipeline {
                 script {
                     echo "deploy image"
                     def shellCmd="bash ./server-cmds.sh"
-                    sshagent(['ec2-server-key-2']) {
+                    sshagent(['ec2-server-key']) {
                         sh "scp server-cmds.sh ec2-user@54.89.35.30:/home/ec2-user"
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@54.89.35.30 ${shellCmd}"
                     }
