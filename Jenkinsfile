@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    environnement{
+    environment{
         DOCKERHUB_USERNAME='simongport'
         DOCKERHUB_PASSWORD='a11otoiq!'
     }
