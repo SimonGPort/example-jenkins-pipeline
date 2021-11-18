@@ -21,7 +21,8 @@ pipeline {
                     def dockerCloseContainer="docker stop ${env.CONTAINER_NAME}"
                     def dockerCmd='docker run -p 3080:3080 -d simongport/react-nodejs-example:1.0'
                     sshagent(['ec2-server-key']) {
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.87.167.25 ${dockerCloseContainer} ${dockerCmd}"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.87.167.25 ${dockerCloseContainer}"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.87.167.25 ${dockerCmd}"
                     }
                 }
             }
