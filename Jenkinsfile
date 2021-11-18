@@ -18,7 +18,7 @@ pipeline {
                     def imageName='simongport/react-nodejs-example:1.0'
                     def dockerCmd='docker run -p 3080:3080 -d simongport/react-nodejs-example:1.0'
                     sshagent(['ec2-server-key']) {
-                        sh "docker stop $(docker ps -q --filter ancestor=${imageName})"
+                        sh "docker stop $(docker ps -q --filter ancestor=simongport/react-nodejs-example:1.0)"
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@3.87.167.25 ${dockerCmd}"
                     }
                 }
