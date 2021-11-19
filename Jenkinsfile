@@ -14,6 +14,7 @@ pipeline {
                     sshagent(['ec2-server-key-2']) {
                         sh "scp server-cmds.sh ec2-user@54.89.35.30:/home/ec2-user"
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@54.89.35.30 ${shellCmd}"
+                    }
                 }
             }
         }
