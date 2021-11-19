@@ -1,4 +1,5 @@
 def gv
+def gvUpdate
 
 pipeline {
     agent any
@@ -7,6 +8,7 @@ pipeline {
             steps{
                 script{
                     gv=load "version.groovy"
+                    gvUpdate=load "update-version.groovy"
                 }
             }
         }
@@ -74,11 +76,13 @@ pipeline {
                     int actual_version_number_update = env.VERSION.toInteger()
                     int next_version_number=actual_version_number_update+1
                     String new_version = String.valueOf(next_version_number);
-                    echo "next version: ${new_version}"
+                    def new_version_script=gvUpdate(new_version)
+                    echo "new_version_script: ${new_version_script}"
+                    // echo "next version: ${new_version}"
 
-                    versionContent=versionContent.replace(env.VERSION,new_version)
+                    // versionContent=versionContent.replace(env.VERSION,new_version)
 
-                    writeFile([file: 'version.groovy', text: new_version])
+                    writeFile([file: 'version.groovy', text: new_version_script])
                     def version2=readFile('version.groovy')
                     echo "${version2}"
 
