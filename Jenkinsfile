@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment{
+        IMAGE_NAME=''
+        OLD_IMAGE_NAME=''
+    }
     stages {
           stage("increment version") {
             steps {
@@ -31,11 +35,10 @@ pipeline {
             steps {
                 script {
                     echo "building image"
-                    // def image_name_temp=env.IMAGE_NAME
+                    def image_name_temp=env.IMAGE_NAME
                     echo "docker build -t ${env.IMAGE_NAME} ."
-                    // echo "${image_name_temp}"
-                    sh "docker build -t ${env.IMAGE_NAME} ."
-                    // sh "docker build -t ${image_name_temp} ."
+                    echo "${image_name_temp}"
+                    sh "docker build -t ${image_name_temp} ."
                 }
             }
         }
