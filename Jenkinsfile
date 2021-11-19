@@ -60,7 +60,8 @@ pipeline {
             steps {
                 script {
                     sshagent(['ec2-server-key-2']) {
-                        echo "hello"
+                        def testCmds='echo "hello"'
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@54.89.35.30 ${testCmds}"
                     }
                 }
             }
