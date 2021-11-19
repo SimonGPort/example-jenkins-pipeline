@@ -13,10 +13,14 @@ pipeline {
                     version_number=version_number+0.1
                     String new_version = String.valueOf(version_number);
                     echo "${version_number}"
-                    File new_version_file = new File ('version2.sh')
+
+                    String currentDir = new File(".").getAbsolutePath()
+                    echo"${currentDir}"
+
+                    File new_version_file = new File ('version.sh')
                     new_version_file.write(new_version)
 
-                    def version2=readFile('version2.sh')
+                    def version2=readFile('version.sh')
                     echo "${version2}"
                 }
             }
