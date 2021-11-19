@@ -10,7 +10,7 @@ pipeline {
                     env.IMAGE_NAME="${image_name_init}:${version}"
                     echo "${env.IMAGE_NAME}"
                     double version_number = Double.parseDouble(version);
-                    double version_number=version_number+0.1
+                    version_number=version_number+0.1
                     echo "${version_number}"
                 }
             }
