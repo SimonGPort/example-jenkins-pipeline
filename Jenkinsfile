@@ -8,7 +8,8 @@ pipeline {
                     echo "increment version"
 
                     def version=readFile('version.sh')
-                    env.IMAGE_NAME="${image_name_init}:${version} ."
+                    // env.IMAGE_NAME="${image_name_init}:${version} ."
+                    env.IMAGE_NAME='simongport/react-nodejs-example:2 .'
                     echo "image-name to build: ${IMAGE_NAME}"
                     int actual_version_number = version.toInteger()
 
