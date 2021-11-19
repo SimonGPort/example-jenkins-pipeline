@@ -8,7 +8,7 @@ pipeline {
                     echo "increment version"
 
                     def version=readFile('version.sh')
-                    env.IMAGE_NAME="${image_name_init}:${version}"
+                    env.IMAGE_NAME="${image_name_init}:${version} ."
                     echo "image-name to build: ${IMAGE_NAME}"
                     int actual_version_number = version.toInteger()
 
@@ -31,10 +31,8 @@ pipeline {
             steps {
                 script {
                     echo "building image"
-                    echo "docker build -t ${IMAGE_NAME} ."
-                    echo "this is my echo variable ${IMAGE_NAME}"
-                    sh 'echo "this is my echo variable ${IMAGE_NAME}" .'
-                    sh "docker build -t ${env.IMAGE_NAME} ‘.’"
+                    echo "docker build -t ${IMAGE_NAME}"
+                    sh "docker build -t ${IMAGE_NAME}"
                 }
             }
         }
