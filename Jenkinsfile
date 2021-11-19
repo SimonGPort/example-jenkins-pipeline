@@ -10,7 +10,6 @@ pipeline {
                     env.IMAGE_NAME="${image_name_init}:${version}"
                     echo "${env.IMAGE_NAME}"
                     def version_number = Double.parseDouble(version);
-                    println (version_number instanceof String)
                     echo "${version_number}"
                 }
             }
