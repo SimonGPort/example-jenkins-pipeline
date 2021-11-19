@@ -32,7 +32,7 @@ pipeline {
                 script {
                     echo "building image"
                     echo "docker build -t ${IMAGE_NAME} ."
-                    sh "docker build -t ${IMAGE_NAME} ."
+                    sh "docker build -t $IMAGE_NAME ."
                 }
             }
         }
@@ -41,7 +41,7 @@ pipeline {
             steps {
                 script {
                     echo "push image"
-                    sh "docker push ${IMAGE_NAME}"
+                    sh "docker push $IMAGE_NAME"
                 }
             }
         }
@@ -50,7 +50,7 @@ pipeline {
             steps {
                 script {
                     echo "deploy image"
-                    def shellCmd="bash ./server-cmds.sh ${IMAGE_NAME} ${OLD_IMAGE_NAME}"
+                    def shellCmd="bash ./server-cmds.sh $IMAGE_NAME $OLD_IMAGE_NAME"
                     sshagent(['ec2-server-key-2']) {
                         sh "scp server-cmds.sh ec2-user@54.89.35.30:/home/ec2-user"
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@54.89.35.30 ${shellCmd}"
