@@ -2,8 +2,6 @@
 
 echo "inside shell cmds"
 echo "variables $1 $2"
-IFVALUE=docker ps -q --filter ancestor=$2
-echo $IFVALUE
 
 if[docker ps -q --filter ancestor=$2]
 then
