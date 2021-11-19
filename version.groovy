@@ -1,1 +1,5 @@
-versionApp(){ return 5 }
+def versionApp(){
+    return "4"
+}
+
+return this
