@@ -1,12 +1,9 @@
-
 def updateVersionFile($1){
 
-def versionApp(){
+return "versionApp(){
     echo 'inside versionAPP'
     return $1
-}
-
-return versionApp
+}"
 
 }
 
