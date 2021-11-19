@@ -7,8 +7,7 @@ pipeline {
                     def image_name_init='simongport/react-nodejs-example'
                     echo "increment version"
                     def version=readFile('version.sh')
-                    echo "ici:${version}"
-                    env.IMAGE_NAME="test"
+                    env.IMAGE_NAME="${image_name_init}:${version}"
                     echo "${env.IMAGE_NAME}"
                 }
             }
