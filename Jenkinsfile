@@ -27,58 +27,58 @@ pipeline {
             }
         }
 
-        // stage("build image") {
-        //     steps {
-        //         script {
-        //             echo "building image"
-        //             echo "docker build -t ${env.IMAGE_NAME} ."
-        //             sh "docker build -t ${env.IMAGE_NAME} ."
-        //         }
-        //     }
-        // }
+        stage("build image") {
+            steps {
+                script {
+                    echo "building image"
+                    echo "docker build -t ${env.IMAGE_NAME} ."
+                    sh "docker build -t ${env.IMAGE_NAME} ."
+                }
+            }
+        }
 
-        //  stage("push image to dockerhub") {
-        //     steps {
-        //         script {
-        //             echo "push image"
-        //             sh "docker push ${env.IMAGE_NAME}"
-        //         }
-        //     }
-        // }
+         stage("push image to dockerhub") {
+            steps {
+                script {
+                    echo "push image"
+                    sh "docker push ${env.IMAGE_NAME}"
+                }
+            }
+        }
 
-        // stage("deploy") {
-        //     steps {
-        //         script {
-        //             echo "deploy image"
-        //             def shellCmd="bash ./server-cmds.sh ${env.IMAGE_NAME} ${env.OLD_IMAGE_NAME}"
-        //             sshagent(['ec2-server-key-2']) {
-        //                 sh "scp server-cmds.sh ec2-user@54.89.35.30:/home/ec2-user"
-        //                 sh "ssh -o StrictHostKeyChecking=no ec2-user@54.89.35.30 ${shellCmd}"
-        //             }
-        //         }
-        //     }
-        // }
+        stage("deploy") {
+            steps {
+                script {
+                    echo "deploy image"
+                    def shellCmd="bash ./server-cmds.sh ${env.IMAGE_NAME} ${env.OLD_IMAGE_NAME}"
+                    sshagent(['ec2-server-key-2']) {
+                        sh "scp server-cmds.sh ec2-user@54.89.35.30:/home/ec2-user"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@54.89.35.30 ${shellCmd}"
+                    }
+                }
+            }
+        }
 
-        // stage("commit version update") {
-        //     steps {
-        //         script {
-        //             echo "commit version update"
-        //             withCredentials([usernamePassword(credentialsId: 'github-id-access-token',passwordVariable:'PASS', usernameVariable:'USER')]){
-        //                 sh 'git config user.email "simon.giroux.portelance@gmail.com"'
-        //                 sh 'git config user.name "jenkins"'
+        stage("commit version update") {
+            steps {
+                script {
+                    echo "commit version update"
+                    withCredentials([usernamePassword(credentialsId: 'github-id-access-token',passwordVariable:'PASS', usernameVariable:'USER')]){
+                        sh 'git config user.email "simon.giroux.portelance@gmail.com"'
+                        sh 'git config user.name "jenkins"'
 
-        //                 sh 'git status'
-        //                 sh 'git branch'
-        //                 sh 'git config --list'
+                        sh 'git status'
+                        sh 'git branch'
+                        sh 'git config --list'
                         
-        //                 sh "git remote set-url origin https://${USER}:${PASS}@github.com/SimonGPort/example-jenkins-pipeline.git"
-        //                 sh 'git add .'
-        //                 sh 'git commit -m "ci: version bump"'
-        //                 sh 'git push origin HEAD:master'
+                        sh "git remote set-url origin https://${USER}:${PASS}@github.com/SimonGPort/example-jenkins-pipeline.git"
+                        sh 'git add .'
+                        sh 'git commit -m "ci: version bump"'
+                        sh 'git push origin HEAD:master'
 
-        //             }
-        //         }
-        //     }
-        // }
+                    }
+                }
+            }
+        }
     }   
 }
