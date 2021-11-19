@@ -3,7 +3,7 @@
 echo "inside shell cmds"
 echo "variables $1 $2"
 
-if[docker ps -q --filter ancestor=$2]
+if[-e docker ps -q --filter ancestor=$2]
 then
 echo "inside if function"
 docker stop $(docker ps -q --filter ancestor=$2)
