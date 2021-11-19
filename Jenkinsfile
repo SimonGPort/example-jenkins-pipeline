@@ -11,7 +11,7 @@ pipeline {
                     echo "increment version"
                     def version=readFile('version.sh')
                     echo "ici:${version}"
-                    env.IMAGE_NAME="$image_name_init:$version"
+                    env.IMAGE_NAME="test"
                     echo "${env.IMAGE_NAME}"
                 }
             }
