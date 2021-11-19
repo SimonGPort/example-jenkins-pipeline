@@ -1,2 +1,2 @@
-def versionApp(){ return '5' } 
+def versionApp(){ return '6' } 
  return this
