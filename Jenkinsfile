@@ -1,31 +1,33 @@
+def gv
+
 pipeline {
     agent any
     stages {
-          stage("increment version") {
+        stage("init") {
+            steps{
+                script{
+                    gv=load "version.groovy"
+                }
+            }
+        }
+
+        stage("increment version") {
             steps {
                 script {
                     def image_name_init='simongport/react-nodejs-example'
                     echo "increment version"
 
-                    def version=readFile('version.txt')
+                    env.VERSION=gv.versionApp()
                     // env.IMAGE_NAME='simongport/react-nodejs-example:2 .'
-                    env.IMAGE_NAME="${image_name_init}:${version} ."
+                    env.IMAGE_NAME="${image_name_init}:${VERSION} ."
 
                     echo "image-name to build: ${IMAGE_NAME}"
-                    int actual_version_number = version.toInteger()
-
-                    int next_version_number=actual_version_number+1
-                    String new_version = String.valueOf(next_version_number);
-                    echo "next version: ${new_version}"
+                    int actual_version_number = $VERSION.toInteger()
 
                     int old_version_number=actual_version_number-1
                     String old_version = String.valueOf(old_version_number);
                     env.OLD_IMAGE_NAME="${image_name_init}:${old_version}"
                     echo "old version: ${OLD_IMAGE_NAME}"
-
-                    writeFile([file: 'version.txt', text: new_version])
-                    def version2=readFile('version.txt')
-                    echo "${version2}"
                 }
             }
         }
@@ -40,32 +42,46 @@ pipeline {
             }
         }
 
-         stage("push image to dockerhub") {
-            steps {
-                script {
-                    echo "push image"
-                    sh "docker push $IMAGE_NAME"
-                }
-            }
-        }
+        //  stage("push image to dockerhub") {
+        //     steps {
+        //         script {
+        //             echo "push image"
+        //             sh "docker push $IMAGE_NAME"
+        //         }
+        //     }
+        // }
 
-        stage("deploy") {
-            steps {
-                script {
-                    echo "deploy image"
-                    def shellCmd="bash ./server-cmds.sh $IMAGE_NAME $OLD_IMAGE_NAME"
-                    sshagent(['ec2-server-key-2']) {
-                        sh "scp server-cmds.sh ec2-user@54.89.35.30:/home/ec2-user"
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@54.89.35.30 ${shellCmd}"
-                    }
-                }
-            }
-        }
+        // stage("deploy") {
+        //     steps {
+        //         script {
+        //             echo "deploy image"
+        //             def shellCmd="bash ./server-cmds.sh $IMAGE_NAME $OLD_IMAGE_NAME"
+        //             sshagent(['ec2-server-key-2']) {
+        //                 sh "scp server-cmds.sh ec2-user@54.89.35.30:/home/ec2-user"
+        //                 sh "ssh -o StrictHostKeyChecking=no ec2-user@54.89.35.30 ${shellCmd}"
+        //             }
+        //         }
+        //     }
+        // }
 
         stage("commit version update") {
             steps {
                 script {
                     echo "commit version update"
+
+                    def versionContent=readFile('version.groovy')
+                    int actual_version_number_update = $VERSION.toInteger()
+                    int next_version_number=actual_version_number_update+1
+                    String new_version = String.valueOf(next_version_number);
+                    echo "next version: ${new_version}"
+
+                    versionContent=versionContent.replace($VERSION,$new_version)
+
+                    writeFile([file: 'version.groovy', text: new_version])
+                    def version2=readFile('version.groovy')
+                    echo "${version2}"
+
+
                     withCredentials([usernamePassword(credentialsId: 'github-id-access-token',passwordVariable:'PASS', usernameVariable:'USER')]){
                         sh 'git config user.email "simon.giroux.portelance@gmail.com"'
                         sh 'git config user.name "jenkins"'
