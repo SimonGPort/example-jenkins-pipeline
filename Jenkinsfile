@@ -6,23 +6,17 @@ pipeline {
                 script {
                     def image_name_init='simongport/react-nodejs-example'
                     echo "increment version"
+                    
                     def version=readFile('version.sh')
                     env.IMAGE_NAME="${image_name_init}:${version}"
-                    echo "${env.IMAGE_NAME}"
+                    echo "image-name to build: ${env.IMAGE_NAME}"
                     double version_number = Double.parseDouble(version);
                     version_number=version_number+0.1
                     String new_version = String.valueOf(version_number);
-                    echo "${version_number}"
-
-                    String currentDir = new File(".").getAbsolutePath()
-                    echo"${currentDir}"
+                    echo "next version: ${new_version}"
 
                     writeFile([file: 'version.sh', text: new_version])
-                    // File new_version_file = new File ('version.sh')
-                    // new_version_file.write(new_version)
-
                     def version2=readFile('version.sh')
-                    echo "${version2}"
                 }
             }
         }
