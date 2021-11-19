@@ -13,6 +13,9 @@ pipeline {
                     echo "${typeof_version}"
                     def typeof_version_test=version_test.getClass()
                     echo "${typeof_version_test}"
+                    def kk='hello'
+                    def typeof_kk=kk.getClass()
+                    echo "${typeof_kk}"
                     // env.IMAGE_NAME='simongport/react-nodejs-example:2 .'
                     echo "image-name to build: ${IMAGE_NAME}"
                     int actual_version_number = version.toInteger()
