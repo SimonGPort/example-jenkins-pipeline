@@ -68,10 +68,12 @@ pipeline {
         // }
 
         stage("commit version update test") {
-            script {
-                String new_version_script=gvUpdate('allo')
-                echo "${new_version_script}"
-             }
+            steps {
+                script {
+                    String new_version_script=gvUpdate('allo')
+                    echo "${new_version_script}"
+                }
+            }
         }
 
 
