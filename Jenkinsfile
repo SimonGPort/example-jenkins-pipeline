@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment{
-        IMAGE_NAME=''
-    }
     stages {
           stage("increment version") {
             steps {
