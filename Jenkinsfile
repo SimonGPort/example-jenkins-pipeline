@@ -9,7 +9,7 @@ pipeline {
 
                     def version=readFile('version.sh')
                     env.IMAGE_NAME="${image_name_init}:${version}"
-                    echo "image-name to build: ${$IMAGE_NAME}"
+                    echo "image-name to build: ${IMAGE_NAME}"
                     int actual_version_number = version.toInteger()
 
                     int next_version_number=actual_version_number+1
@@ -19,7 +19,7 @@ pipeline {
                     int old_version_number=actual_version_number-1
                     String old_version = String.valueOf(old_version_number);
                     env.OLD_IMAGE_NAME="${image_name_init}:${old_version}"
-                    echo "old version: ${$OLD_IMAGE_NAME}"
+                    echo "old version: ${OLD_IMAGE_NAME}"
 
                     writeFile([file: 'version.sh', text: new_version])
                     def version2=readFile('version.sh')
@@ -32,10 +32,10 @@ pipeline {
                 script {
                     echo "building image"
                     // def image_name_temp=env.IMAGE_NAME
-                    echo "docker build -t ${$IMAGE_NAME} ."
+                    echo "docker build -t ${IMAGE_NAME} ."
                     // echo "${image_name_temp}"
                     // sh "docker build -t ${image_name_temp} ."
-                    sh "docker build -t ${$IMAGE_NAME} ."
+                    sh "docker build -t ${IMAGE_NAME} ."
                 }
             }
         }
@@ -44,7 +44,7 @@ pipeline {
             steps {
                 script {
                     echo "push image"
-                    sh "docker push ${$IMAGE_NAME}"
+                    sh "docker push ${IMAGE_NAME}"
                 }
             }
         }
@@ -53,7 +53,7 @@ pipeline {
             steps {
                 script {
                     echo "deploy image"
-                    def shellCmd="bash ./server-cmds.sh ${$IMAGE_NAME} ${$OLD_IMAGE_NAME}"
+                    def shellCmd="bash ./server-cmds.sh ${IMAGE_NAME} ${OLD_IMAGE_NAME}"
                     sshagent(['ec2-server-key-2']) {
                         sh "scp server-cmds.sh ec2-user@54.89.35.30:/home/ec2-user"
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@54.89.35.30 ${shellCmd}"
