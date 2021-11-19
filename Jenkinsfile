@@ -32,6 +32,7 @@ pipeline {
                 script {
                     echo "building image"
                     echo "docker build -t ${IMAGE_NAME} ."
+                    echo "this is my echo variable ${IMAGE_NAME}"
                     sh "docker build -t $IMAGE_NAME ."
                 }
             }
