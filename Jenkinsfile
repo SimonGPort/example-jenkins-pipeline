@@ -57,7 +57,7 @@ pipeline {
             steps {
                 script {
                     echo "commit version update"
-                    withCredentials([usernamePassword(credentialsId: 'github-id',passwordVariable:'PASS', usernameVariable:'USER')]){
+                    withCredentials([usernamePassword(credentialsId: 'github-id-access-token',passwordVariable:'PASS', usernameVariable:'USER')]){
                         sh 'git config user.email "simon.giroux.portelance@gmail.com"'
                         sh 'git config user.name "jenkins"'
 
