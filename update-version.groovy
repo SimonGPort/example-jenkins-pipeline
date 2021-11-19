@@ -1,5 +1,5 @@
-def updateVersionFile($1){
-return "versionApp(){ echo 'inside versionAPP' return $1 }"
+def updateVersionFile(new_version){
+return "versionApp(){ echo 'inside versionAPP' return ${new_version} }"
 }
 
 return this
