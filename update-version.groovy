@@ -1,4 +1,4 @@
-def updateVersionFile(new_version){
+def updateVersionFile(){
 return "allo"
 }
 
