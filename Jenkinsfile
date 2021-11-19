@@ -17,8 +17,9 @@ pipeline {
                     String currentDir = new File(".").getAbsolutePath()
                     echo"${currentDir}"
 
-                    File new_version_file = new File ('version.sh')
-                    new_version_file.write(new_version)
+                    writeFile([file: 'version.sh', text: new_version])
+                    // File new_version_file = new File ('version.sh')
+                    // new_version_file.write(new_version)
 
                     def version2=readFile('version.sh')
                     echo "${version2}"
