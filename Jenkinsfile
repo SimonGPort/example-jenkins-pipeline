@@ -31,6 +31,7 @@ pipeline {
             steps {
                 script {
                     echo "building image"
+                    echo "docker build -t ${env.IMAGE_NAME} ."
                     sh "docker build -t ${env.IMAGE_NAME} ."
                 }
             }
