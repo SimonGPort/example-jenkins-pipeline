@@ -7,17 +7,10 @@ pipeline {
                     def image_name_init='simongport/react-nodejs-example'
                     echo "increment version"
 
-                    def version=readFile('version.sh').getText('UTF-8')
-                    def version_test=version.toString()
-                    def typeof_version=version.getClass()
-                    echo "${typeof_version}"
-                    def typeof_version_test=version_test.getClass()
-                    echo "${typeof_version_test}"
-                    def kk='hello'
-                    def typeof_kk=kk.getClass()
-                    echo "${typeof_kk}"
+                    def version=readFile('version.sh')
+                   echo"${version.VERSION}"
                     // env.IMAGE_NAME='simongport/react-nodejs-example:2 .'
-                    env.IMAGE_NAME="${image_name_init}:${version} ."
+                    env.IMAGE_NAME="${image_name_init}:${version.VERSION} ."
 
                     echo "image-name to build: ${IMAGE_NAME}"
                     int actual_version_number = version.toInteger()
