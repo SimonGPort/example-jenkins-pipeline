@@ -20,9 +20,9 @@ pipeline {
                     env.VERSION=gv.versionApp()
                     echo "${env.VERSION}"
                     // env.IMAGE_NAME='simongport/react-nodejs-example:2 .'
-                    env.IMAGE_NAME="${image_name_init}:${VERSION} ."
+                    env.IMAGE_NAME="${image_name_init}:${env.VERSION} ."
 
-                    echo "image-name to build: ${IMAGE_NAME}"
+                    echo "image-name to build: ${env.IMAGE_NAME}"
                     int actual_version_number = $VERSION.toInteger()
 
                     int old_version_number=actual_version_number-1
