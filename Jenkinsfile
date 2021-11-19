@@ -70,7 +70,7 @@ pipeline {
         stage("commit version update test") {
             steps {
                 script {
-                    String new_version_script=gvUpdate('allo')
+                    String new_version_script=gvUpdate.updateVersionFile('allo')
                     echo "${new_version_script}"
                 }
             }
