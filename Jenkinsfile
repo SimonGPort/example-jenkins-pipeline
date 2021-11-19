@@ -22,7 +22,7 @@ pipeline {
                     env.VERSION=gv.versionApp()
                     echo "${env.VERSION}"
                     // env.IMAGE_NAME='simongport/react-nodejs-example:2 .'
-                    env.IMAGE_NAME="${image_name_init}:${env.VERSION} ."
+                    env.IMAGE_NAME="${image_name_init}:${env.VERSION}"
 
                     echo "image-name to build: ${env.IMAGE_NAME}"
                     int actual_version_number = env.VERSION.toInteger()
@@ -40,7 +40,7 @@ pipeline {
                 script {
                     echo "building image"
                     echo "docker build -t ${env.IMAGE_NAME}"
-                    sh "docker build -t ${env.IMAGE_NAME}"
+                    sh "docker build -t ${env.IMAGE_NAME} ."
                 }
             }
         }
