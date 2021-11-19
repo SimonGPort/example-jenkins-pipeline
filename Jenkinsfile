@@ -9,6 +9,7 @@ pipeline {
                     def version=readFile('version.sh')
                     env.IMAGE_NAME="${image_name_init}:${version}"
                     echo "${env.IMAGE_NAME}"
+                    println (version instanceof String)
                 }
             }
         }
