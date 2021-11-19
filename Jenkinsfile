@@ -43,29 +43,29 @@ pipeline {
         //     }
         // }
 
-        // stage("deploy") {
-        //     steps {
-        //         script {
-        //             echo "deploy image"
-        //             def shellCmd="bash ./server-cmds.sh ${env.IMAGE_NAME} ${env.OLD_IMAGE_NAME}"
-        //             sshagent(['ec2-server-key-2']) {
-        //                 sh "scp server-cmds.sh ec2-user@54.89.35.30:/home/ec2-user"
-        //                 sh "ssh -o StrictHostKeyChecking=no ec2-user@54.89.35.30 ${shellCmd}"
-        //             }
-        //         }
-        //     }
-        // }
-
-        stage("connection-test") {
+        stage("deploy") {
             steps {
                 script {
+                    echo "deploy image"
+                    def shellCmd="bash ./server-cmds.sh ${env.IMAGE_NAME} ${env.OLD_IMAGE_NAME}"
                     sshagent(['ec2-server-key-2']) {
-                        def testCmds='echo "hello"'
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@54.89.35.30 ${testCmds}"
+                        sh "scp server-cmds.sh ec2-user@54.89.35.30:/home/ec2-user"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@54.89.35.30 ${shellCmd}"
                     }
                 }
             }
         }
+
+        // stage("connection-test") {
+        //     steps {
+        //         script {
+        //             sshagent(['ec2-server-key-2']) {
+        //                 def testCmds='echo "hello"'
+        //                 sh "ssh -o StrictHostKeyChecking=no ec2-user@54.89.35.30 ${testCmds}"
+        //             }
+        //         }
+        //     }
+        // }
 
         // stage("commit version update") {
         //     steps {
