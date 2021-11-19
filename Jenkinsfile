@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment{
-        IMAGE_NAME='simongport/react-nodejs-example'
+        IMAGE_NAME=''
     }
     stages {
           stage("increment version") {
