@@ -33,15 +33,15 @@ pipeline {
             }
         }
 
-        stage("build image") {
-            steps {
-                script {
-                    echo "building image"
-                    echo "docker build -t ${env.IMAGE_NAME}"
-                    sh "docker build -t ${env.IMAGE_NAME}"
-                }
-            }
-        }
+        // stage("build image") {
+        //     steps {
+        //         script {
+        //             echo "building image"
+        //             echo "docker build -t ${env.IMAGE_NAME}"
+        //             sh "docker build -t ${env.IMAGE_NAME}"
+        //         }
+        //     }
+        // }
 
         //  stage("push image to dockerhub") {
         //     steps {
@@ -76,7 +76,7 @@ pipeline {
                     String new_version = String.valueOf(next_version_number);
                     echo "next version: ${new_version}"
 
-                    versionContent=versionContent.replace($VERSION,$new_version)
+                    versionContent=versionContent.replace(env.VERSION,$new_version)
 
                     writeFile([file: 'version.groovy', text: new_version])
                     def version2=readFile('version.groovy')
