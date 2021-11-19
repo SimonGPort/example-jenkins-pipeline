@@ -31,8 +31,8 @@ pipeline {
             steps {
                 script {
                     echo "building image"
-                    def image_name_temp=$IMAGE_NAME
                     echo "docker build -t ${IMAGE_NAME} ."
+                    def image_name_temp=$IMAGE_NAME
                     // echo "${image_name_temp}"
                     // sh "docker build -t ${image_name_temp} ."
                     sh "docker build -t ${image_name_temp} ."
