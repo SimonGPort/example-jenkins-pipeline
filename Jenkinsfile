@@ -23,12 +23,12 @@ pipeline {
                     env.IMAGE_NAME="${image_name_init}:${env.VERSION} ."
 
                     echo "image-name to build: ${env.IMAGE_NAME}"
-                    int actual_version_number = $VERSION.toInteger()
+                    int actual_version_number = env.VERSION.toInteger()
 
                     int old_version_number=actual_version_number-1
                     String old_version = String.valueOf(old_version_number);
                     env.OLD_IMAGE_NAME="${image_name_init}:${old_version}"
-                    echo "old version: ${OLD_IMAGE_NAME}"
+                    echo "old version: ${env.OLD_IMAGE_NAME}"
                 }
             }
         }
@@ -37,8 +37,8 @@ pipeline {
             steps {
                 script {
                     echo "building image"
-                    echo "docker build -t ${IMAGE_NAME}"
-                    sh "docker build -t ${IMAGE_NAME}"
+                    echo "docker build -t ${env.IMAGE_NAME}"
+                    sh "docker build -t ${env.IMAGE_NAME}"
                 }
             }
         }
@@ -71,7 +71,7 @@ pipeline {
                     echo "commit version update"
 
                     def versionContent=readFile('version.groovy')
-                    int actual_version_number_update = $VERSION.toInteger()
+                    int actual_version_number_update = env.VERSION.toInteger()
                     int next_version_number=actual_version_number_update+1
                     String new_version = String.valueOf(next_version_number);
                     echo "next version: ${new_version}"
