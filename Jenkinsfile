@@ -76,7 +76,7 @@ pipeline {
                     String new_version = String.valueOf(next_version_number);
                     echo "next version: ${new_version}"
 
-                    versionContent=versionContent.replace(env.VERSION,$new_version)
+                    versionContent=versionContent.replace(env.VERSION,new_version)
 
                     writeFile([file: 'version.groovy', text: new_version])
                     def version2=readFile('version.groovy')
