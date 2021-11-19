@@ -35,37 +35,37 @@ pipeline {
             }
         }
 
-        // stage("build image") {
-        //     steps {
-        //         script {
-        //             echo "building image"
-        //             echo "docker build -t ${env.IMAGE_NAME}"
-        //             sh "docker build -t ${env.IMAGE_NAME}"
-        //         }
-        //     }
-        // }
+        stage("build image") {
+            steps {
+                script {
+                    echo "building image"
+                    echo "docker build -t ${env.IMAGE_NAME}"
+                    sh "docker build -t ${env.IMAGE_NAME}"
+                }
+            }
+        }
 
-        //  stage("push image to dockerhub") {
-        //     steps {
-        //         script {
-        //             echo "push image"
-        //             sh "docker push $IMAGE_NAME"
-        //         }
-        //     }
-        // }
+         stage("push image to dockerhub") {
+            steps {
+                script {
+                    echo "push image"
+                    sh "docker push $IMAGE_NAME"
+                }
+            }
+        }
 
-        // stage("deploy") {
-        //     steps {
-        //         script {
-        //             echo "deploy image"
-        //             def shellCmd="bash ./server-cmds.sh $IMAGE_NAME $OLD_IMAGE_NAME"
-        //             sshagent(['ec2-server-key-2']) {
-        //                 sh "scp server-cmds.sh ec2-user@54.89.35.30:/home/ec2-user"
-        //                 sh "ssh -o StrictHostKeyChecking=no ec2-user@54.89.35.30 ${shellCmd}"
-        //             }
-        //         }
-        //     }
-        // }
+        stage("deploy") {
+            steps {
+                script {
+                    echo "deploy image"
+                    def shellCmd="bash ./server-cmds.sh $IMAGE_NAME $OLD_IMAGE_NAME"
+                    sshagent(['ec2-server-key-2']) {
+                        sh "scp server-cmds.sh ec2-user@54.89.35.30:/home/ec2-user"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@54.89.35.30 ${shellCmd}"
+                    }
+                }
+            }
+        }
 
         stage("commit version update") {
             steps {
@@ -78,9 +78,6 @@ pipeline {
                     String new_version = String.valueOf(next_version_number);
                     String new_version_script=gvUpdate.updateVersionFile(new_version)
                     echo "new_version_script: ${new_version_script}"
-                    // echo "next version: ${new_version}"
-
-                    // versionContent=versionContent.replace(env.VERSION,new_version)
 
                     writeFile([file: 'version.groovy', text: new_version_script])
                     def version2=readFile('version.groovy')
