@@ -10,13 +10,14 @@ pipeline {
                     def version=readFile('version.sh')
                     env.IMAGE_NAME="${image_name_init}:${version}"
                     echo "image-name to build: ${env.IMAGE_NAME}"
-                    double version_number = Double.parseDouble(version);
-                    double next_version_number=version_number+0.1
+                    double actual_version_number = Double.parseDouble(version);
+
+                    double next_version_number=actual_version_number+0.1
                     String new_version = String.valueOf(next_version_number);
                     echo "next version: ${new_version}"
 
-                    double old_version=version_number-0.1
-                    String old_version = String.valueOf(old_version);
+                    double old_version_number=actual_version_number-0.1
+                    String old_version = String.valueOf(old_version_number);
                     env.OLD_IMAGE_NAME="${image_name_init}:${old_version}"
                     echo "old version: ${env.OLD_IMAGE_NAME}"
 
