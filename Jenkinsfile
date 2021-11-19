@@ -18,6 +18,7 @@ pipeline {
                     echo "increment version"
 
                     env.VERSION=gv.versionApp()
+                    echo "${env.VERSION}"
                     // env.IMAGE_NAME='simongport/react-nodejs-example:2 .'
                     env.IMAGE_NAME="${image_name_init}:${VERSION} ."
 
