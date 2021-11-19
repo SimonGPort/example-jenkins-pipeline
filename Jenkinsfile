@@ -6,7 +6,7 @@ pipeline {
                 script {
                     def image_name_init='simongport/react-nodejs-example'
                     echo "increment version"
-                    
+
                     def version=readFile('version.sh')
                     env.IMAGE_NAME="${image_name_init}:${version}"
                     echo "image-name to build: ${env.IMAGE_NAME}"
@@ -14,6 +14,12 @@ pipeline {
                     version_number=version_number+0.1
                     String new_version = String.valueOf(version_number);
                     echo "next version: ${new_version}"
+
+                    old_version=version_number-0.1
+                    String old_version = String.valueOf(old_version);
+                    env.OLD_IMAGE_NAME="${image_name_init}:${old_version}"
+
+                    echo "old version: ${env.OLD_IMAGE_NAME}"
 
                     writeFile([file: 'version.sh', text: new_version])
                     def version2=readFile('version.sh')
