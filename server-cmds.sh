@@ -3,7 +3,7 @@
 echo "inside shell cmds"
 echo "variables $1 $2"
 
-if lsof -Pi :3080 -sTCP:LISTEN -t >/dev/null ; then
+if docker ps -q --filter ancestor=$2 >/dev/null ; then
     echo "port 3080 running"
     docker stop $(docker ps -q --filter ancestor=$2)
 else
