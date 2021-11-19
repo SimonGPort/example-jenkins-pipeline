@@ -18,7 +18,6 @@ pipeline {
                     old_version=version_number-0.1
                     String old_version = String.valueOf(old_version);
                     env.OLD_IMAGE_NAME="${image_name_init}:${old_version}"
-
                     echo "old version: ${env.OLD_IMAGE_NAME}"
 
                     writeFile([file: 'version.sh', text: new_version])
@@ -54,5 +53,26 @@ pipeline {
         //         }
         //     }
         // }
+        stage("commit version update") {
+            steps {
+                script {
+                    echo "commit version update"
+                    withCredentials([usernamePassword(credentialsId: 'github-id',passwordVariable:'PASS', usernameVariable:'USER')]){
+                        sh 'git config user.email "simon.giroux.portelance@gmail.com"'
+                        sh 'git config user.name "jenkins"'
+
+                        sh 'git status'
+                        sh 'git branch'
+                        sh 'git config --list'
+                        
+                        sh "git remote set-url origin https://${USER}:${PASS}@github.com/SimonGPort/example-jenkins-pipeline.git"
+                        sh 'git add .'
+                        sh 'git commit -m "ci: version bump"'
+                        sh 'git push origin HEAD:master'
+
+                    }
+                }
+            }
+        }
     }   
 }
