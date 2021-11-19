@@ -76,7 +76,7 @@ pipeline {
                     int actual_version_number_update = env.VERSION.toInteger()
                     int next_version_number=actual_version_number_update+1
                     String new_version = String.valueOf(next_version_number);
-                    def new_version_script=gvUpdate(new_version)
+                    String new_version_script=gvUpdate(new_version)
                     echo "new_version_script: ${new_version_script}"
                     // echo "next version: ${new_version}"
 
