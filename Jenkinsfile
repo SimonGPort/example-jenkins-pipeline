@@ -25,6 +25,7 @@ pipeline {
 
                     writeFile([file: 'version.txt', text: new_version])
                     def version2=readFile('version.txt')
+                    echo "${version2}"
                 }
             }
         }
